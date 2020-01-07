@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import random
 number = random.randrange(0,21)
 user = input("Enter any number you guess")
@@ -10,3 +11,24 @@ elif int(user) <= int(number):
 elif int(user) == int(number):
     print("Yay, enered number is correct")
 print("HElloWorld`")
+=======
+def pypart(n): 
+      
+    # outer loop to handle number of rows 
+    # n in this case 
+    for i in range(0, n): 
+      
+        # inner loop to handle number of columns 
+        # values changing acc. to outer loop 
+        for j in range(0, i+1): 
+          
+            # printing stars 
+            print("* ",end="") 
+       
+        # ending line after each row 
+        print("\r") 
+  
+# Driver Code 
+n = 5
+pypart(n) 
+>>>>>>> 4165cee7140e9a41e9f0169aa1e262690d3b795f
