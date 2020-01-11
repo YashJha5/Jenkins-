@@ -1,36 +1,17 @@
 node {
-    def app
-
-    stage('Clone repository') {
-        /* Let's make sure we have the repository cloned to our workspace */
-
-        checkout master
-     }
-
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
-
-        app = docker.build("task:v1")
-     }
-
-    stage('Test image') {
-        /* Ideally, we would run a test framework against our image.
-         * For this example, we're using a Volkswagen-type approach ;-) */
-
-        app.inside {
-            sh 'echo "Tests passed"'
-         }
-     }
-
-    stage('Push image') {
-        /* Finally, we'll push the image with two tags:
-         * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag.
-         * Pushing multiple tags is cheap, as all the layers are reused. */
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-         }
-     }
- }
+   stage('Get Source') {
+      // copy source code from local file system and test
+      // for a Dockerfile to build the Docker image
+      git ('https://github.com/YashJha5/Jenkins-.git')
+      if (!fileExists("Dockerfile")) {
+         error('Dockerfile missing.')
+      }
+   }
+   stage('Build Docker') {
+       // build the docker image from the source code using the BUILD_ID parameter in image name
+         sh "sudo docker build -t task:v1 ."
+   }
+   stage("run docker container"){
+        sh "sudo docker run -it --network=net -p 4000:5000  test:v1 "
+    }
+}
