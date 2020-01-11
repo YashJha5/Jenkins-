@@ -12,6 +12,6 @@ node {
          sh "sudo docker build . -t task:v1"
    }
    stage("run docker container"){
-        sh "sudo docker run -it --network=net -p 4000:5000  test:v1 "
+        sh "sudo docker run -it -p 4000:5000  test:v1 "
     }
 }
