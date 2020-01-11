@@ -9,7 +9,7 @@ node {
    }
    stage('Build Docker') {
        // build the docker image from the source code using the BUILD_ID parameter in image name
-         sh "sudo docker build -t task:v1 ."
+         sh "sudo docker build . -t task:v1"
    }
    stage("run docker container"){
         sh "sudo docker run -it --network=net -p 4000:5000  test:v1 "
